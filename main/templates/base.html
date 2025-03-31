@@ -1,0 +1,374 @@
+{% load static %}
+<!DOCTYPE html>
+<html  lang="ar">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <title>ELite Tech</title>
+    <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
+
+    <!-- IonIcons -->
+    <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{% static 'dist/css/adminlte_ar.min.css' %}">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  </head>
+  <body dir="rtl" class="hold-transition sidebar-mini">
+{% include 'parts/nav.html' %}
+{% include 'parts/sidebar.html' %}
+
+{% block content%}
+
+
+{% endblock %}
+{% include 'parts/footer.html' %}
+</div>
+<!-- ./wrapper -->
+
+
+<!-- REQUIRED SCRIPTS -->
+<script src="{% static 'plugins/jquery/jquery.js' %}"></script>
+
+<!-- jQuery -->
+<script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
+<!-- Bootstrap -->
+<script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<!-- AdminLTE -->
+<script src="{% static 'dist/js/adminlte.js' %}"></script>
+<!-- OPTIONAL SCRIPTS -->
+
+<script src="{% static 'plugins/chart.js/Chart.min.js' %}"></script>
+
+<script src="{% static 'dist/js/demo.js' %}"></script>
+<!--<script src="dist/js/pages/dashboard3.js'"></script>
+-->
+
+<script>
+$("#catinput").hide()
+$("#addcat").click(function(){
+    $("#catinput").show()
+});
+$("#backcat").click(function(){
+    $("#catinput").hide() 
+});
+</script>
+<!-- document.getElementById("catinput").style.display = "none";
+document.getElementById("addcat").onclick = () => document.getElementById("catinput").style.display = "block";
+document.getElementById("backcat").onclick = () => document.getElementById("catinput").style.display = "none";-->
+<script>
+{% for device in devices %}
+$(".cat{{device.category.id}}").click(function(){
+    $(".devicehide").hide()
+    $(".device{{device.category.id}}").show()
+});
+$(".status{{device.status}}").click(function(){
+    $(".devicehide").hide()
+    $(".device{{device.status}}").show()
+});
+{% endfor %}
+</script>
+<!-- devices.forEach(device => {
+    document.querySelector(`.cat${device.category.id}`).addEventListener("click", () => {
+        document.querySelectorAll(".devicehide").forEach(el => el.style.display = "none");
+        document.querySelectorAll(`.device${device.category.id}`).forEach(el => el.style.display = "block");
+    });
+    document.querySelector(`.status${device.status}`).addEventListener("click", () => {
+        document.querySelectorAll(".devicehide").forEach(el => el.style.display = "none");
+        document.querySelectorAll(`.device${device.status}`).forEach(el => el.style.display = "block");
+    });
+}); -->
+<script>
+$("#rentalprice").keyup(function(){
+    $("#totalrental").val( $("#rentalhours").val() * $("#rentalprice").val())
+});
+</script>
+<script>
+$(document).ready(function() {
+    var total = 0;
+    $('.totalprice').each(function(){
+        $(this).hide()
+        var salary = $(this).text()
+        total += parseInt(salary)
+    });
+    $("#totalsalarys").text($("#totalsalarys").text() + total)
+});
+</script>
+<script>
+var rental = 0;
+$(".totalrental").each(function(){
+    $(this).hide()
+    var money = $(this).text()
+    rental += parseInt(money) 
+});
+$(".salaryrental").text(rental)
+$(".salaryrental").hide()
+</script>
+<script>
+var sold = 0;
+$(".totalsold").each(function(){
+    $(this).hide()
+    var money = $(this).text()
+    sold += parseInt(money) 
+});
+$(".salarysold").text(sold)
+$(".salarysold").hide()
+</script>
+<script>
+  $(document).ready(function(){
+    $('#myModal').on('shown.bs.modal', function () {
+      $('#myInput').trigger('focus')
+    });
+  });
+</script>
+<script>
+ 
+  
+
+
+$(function () {
+  'use strict'
+ 
+  var ticksStyle = {
+    fontColor: '#495057',
+    fontStyle: 'bold'
+  }
+
+  var mode      = 'index'
+  var intersect = true
+
+  var $salesChart = $('#sales-chart')
+
+  var salesChart  = new Chart($salesChart, {
+
+    type   : 'bar',
+    
+    data   : {
+
+      labels  : [
+          
+
+        'تفاصيل الارباح',
+
+      ],
+
+
+      datasets: [
+        {
+          backgroundColor: '#007bff',
+          borderColor    : '#007bff',
+          data           : [ 
+               $(".salarysold").text()
+          ]
+        },
+        {
+          backgroundColor: '#ced4da',
+          borderColor    : '#ced4da',
+          data           : [ 
+                $(".salaryrental").text()
+          ]
+        }
+      ]
+    },
+
+   
+   
+   options: {
+      maintainAspectRatio: false,
+      tooltips           : {
+        mode     : mode,
+        intersect: intersect
+      },
+      hover              : {
+        mode     : mode,
+        intersect: intersect
+      },
+      legend             : {
+        display: false
+      },
+      scales             : {
+        yAxes: [{
+          // display: false,
+          gridLines: {
+            display      : true,
+            lineWidth    : '4px',
+            color        : 'rgba(0, 0, 0, .2)',
+            zeroLineColor: 'transparent'
+          },
+          ticks    : $.extend({
+            beginAtZero: true,
+
+            // Include a dollar sign in the ticks
+            callback: function (value, index, values) {
+              if (value >= 1000) {
+                value /= 1000
+                value += 'k'
+              }
+              return '$' + value
+            }
+          }, ticksStyle)
+        }],
+        xAxes: [{
+          display  : true,
+          gridLines: {
+            display: false
+          },
+          ticks    : ticksStyle
+        }]
+      }
+    }
+  });
+  
+ var pieChart = document.getElementById('visitors-chart').getContext('2d')
+
+  var myPieChart = new Chart(pieChart, {
+    type: 'pie',
+    data: {
+      datasets: [{
+        data: ['{{allavailable}}','{{allsold}}','{{allrental}}'],
+        backgroundColor :["#27c100","#f3545d","#fdaf4b"],
+        borderWidth: 10,
+        
+      }],
+      labels: ['متاح', 'مباع', 'مؤجر'] 
+    },
+    options : {
+      responsive: true, 
+      maintainAspectRatio: false,
+      legend: {
+        position : 'bottom',
+        labels : {
+          fontColor: '#000',
+          fontSize: 15,
+          usePointStyle : true,
+          padding:30
+        }
+      },
+      pieceLabel: {
+        render: 'percentage',
+        fontColor: 'white',
+        fontSize: 14,
+      },
+
+
+    }
+  })
+
+})
+
+
+ 
+</script>
+<!-- javascript
+Run
+Copy code
+document.addEventListener('DOMContentLoaded', function() {
+    // Calculate total rental on keyup
+    document.getElementById("rentalhours").addEventListener('keyup', function() {
+        const rentalHours = parseFloat(this.value) || 0;
+        const rentalPrice = parseFloat(document.getElementById("rentalprice").value) || 0;
+        document.getElementById("totalrental").value = rentalHours * rentalPrice;
+    });
+
+    // Calculate total salaries
+    let totalSalary = 0;
+    document.querySelectorAll('.totalprice').forEach(function(element) {
+        const salary = parseInt(element.textContent) || 0;
+        totalSalary += salary;
+    });
+    document.getElementById("totalsalarys").textContent += totalSalary;
+
+    // Calculate total rental
+    let totalRental = 0;
+    document.querySelectorAll(".totalrental").forEach(function(element) {
+        const money = parseInt(element.textContent) || 0;
+        totalRental += money;
+    });
+    const salaryRentalElement = document.querySelector(".salaryrental");
+    salaryRentalElement.textContent = totalRental;
+    salaryRentalElement.style.display = 'none';
+
+    // Calculate total sold
+    let totalSold = 0;
+    document.querySelectorAll(".totalsold").forEach(function(element) {
+        const money = parseInt(element.textContent) || 0;
+        totalSold += money;
+    });
+    const salarySoldElement = document.querySelector(".salarysold");
+    salarySoldElement.textContent = totalSold;
+    salarySoldElement.style.display = 'none';
+
+    // Modal focus
+    const myModal = document.getElementById('myModal');
+    myModal.addEventListener('shown.bs.modal', function() {
+        document.getElementById('myInput').focus();
+    });
+
+    // Sales Chart
+    const salesChartElement = document.getElementById('sales-chart').getContext('2d');
+    const salesChart = new Chart(salesChartElement, {
+        type: 'bar',
+        data: {
+            labels: ['تفاصيل الارباح'],
+            datasets: [
+                {
+                    backgroundColor: '#007bff',
+                    data: [parseInt(salarySoldElement.textContent) || 0]
+                },
+                {
+                    backgroundColor: '#ced4da',
+                    data: [parseInt(salaryRentalElement.textContent) || 0]
+                }
+            ]
+        },
+        options: {
+            maintainAspectRatio: false,
+            tooltips: { mode: 'index', intersect: true },
+            hover: { mode: 'index', intersect: true },
+            legend: { display: false },
+            scales: {
+                yAxes: [{
+                    gridLines: { display: true, lineWidth: '4px', color: 'rgba(0, 0, 0, .2)', zeroLineColor: 'transparent' },
+                    ticks: {
+                        beginAtZero: true,
+                        callback: function(value) {
+                            return value >= 1000 ? '$' + (value / 1000) + 'k' : '$' + value;
+                        }
+                    }
+                }],
+                xAxes: [{ display: true, gridLines: { display: false } }]
+            }
+        }
+    });
+
+    // Visitors Chart
+    const pieChartElement = document.getElementById('visitors-chart').getContext('2d');
+    const myPieChart = new Chart(pieChartElement, {
+        type: 'pie',
+        data: {
+            datasets: [{
+                data: ['{{allavailable}}', '{{allsold}}', '{{allrental}}'],
+                backgroundColor: ["#27c100", "#f3545d", "#fdaf4b"],
+                borderWidth: 10
+            }],
+            labels: ['متاح', 'مباع', 'مؤجر']
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            legend: {
+                position: 'bottom',
+                labels: { fontColor: '#000', fontSize: 15, usePointStyle: true, padding: 30 }
+            },
+            pieceLabel: {
+                render: 'percentage',
+                fontColor: 'white',
+                fontSize: 14
+            }
+        }
+    });  
+}); --> 
+</body>
+</html>
