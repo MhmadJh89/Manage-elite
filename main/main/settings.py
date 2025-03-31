@@ -20,12 +20,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-u*l32ky!qx6iekis8(2)y=yw8k$y(nbuv(rar$b4mocwjr0(^3'
+SECRET_KEY = 'django-insecure-u*l32ky!qx6iekis8(2)y=yw8lhkfjlhasdfklr$b4mocwjr0(^3'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'gondola.proxy.rlwy.net',
+]
 
 
 # Application definition
@@ -78,11 +80,11 @@ WSGI_APPLICATION = 'main.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'meen',
-        'USER': 'teez',
+        'NAME': 'postgres',
+        'USER': 'soraka',
         'PASSWORD': '1234qwer',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'HOST': 'gondola.proxy.rlwy.net',
+        'PORT': '18140',
     }
 }
 
