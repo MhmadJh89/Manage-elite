@@ -80,9 +80,9 @@ WSGI_APPLICATION = 'main.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'soraka',
-        'PASSWORD': '1234qwer',
+        'NAME': 'railway',
+        'USER': 'postgres',
+        'PASSWORD': 'BsrLHfpMKMzCwKGBxrZrHAnqKFYxOBBb',
         'HOST': 'gondola.proxy.rlwy.net',
         'PORT': '18140',
     }
